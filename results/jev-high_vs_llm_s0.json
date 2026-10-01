@@ -1,0 +1,163 @@
+{
+ "summary": {
+  "a": "jev-high",
+  "b": "llm",
+  "games": 6,
+  "score": {
+   "jev-high": 6
+  },
+  "per_player": {
+   "jev-high": {
+    "wins": 6,
+    "avg_ms_per_move": 431.9,
+    "moves": 28,
+    "missed_win": 0,
+    "missed_block": 0,
+    "llm_retries": 0,
+    "llm_fallbacks": 0
+   },
+   "llm": {
+    "wins": 0,
+    "avg_ms_per_move": 13516.6,
+    "moves": 25,
+    "missed_win": 0,
+    "missed_block": 5,
+    "llm_retries": 23,
+    "llm_fallbacks": 3
+   }
+  }
+ },
+ "games": [
+  {
+   "black": "jev-high",
+   "white": "llm",
+   "winner": "jev-high",
+   "moves": 11,
+   "opening": [
+    "H8",
+    "I7",
+    "H10"
+   ],
+   "record": [
+    "H9",
+    "I9",
+    "I8",
+    "J8",
+    "K9",
+    "G11",
+    "L10",
+    "K7"
+   ]
+  },
+  {
+   "black": "llm",
+   "white": "jev-high",
+   "winner": "jev-high",
+   "moves": 14,
+   "opening": [
+    "H8",
+    "I7",
+    "H10"
+   ],
+   "record": [
+    "H7",
+    "H9",
+    "G7",
+    "F7",
+    "G8",
+    "H1",
+    "G6",
+    "J7",
+    "G9",
+    "G10",
+    "G5"
+   ]
+  },
+  {
+   "black": "jev-high",
+   "white": "llm",
+   "winner": "jev-high",
+   "moves": 11,
+   "opening": [
+    "H8",
+    "I6",
+    "H7"
+   ],
+   "record": [
+    "H6",
+    "I7",
+    "J7",
+    "J6",
+    "K7",
+    "K5",
+    "L6",
+    "L4"
+   ]
+  },
+  {
+   "black": "llm",
+   "white": "jev-high",
+   "winner": "jev-high",
+   "moves": 14,
+   "opening": [
+    "H8",
+    "I6",
+    "H7"
+   ],
+   "record": [
+    "H6",
+    "I7",
+    "G6",
+    "J6",
+    "G9",
+    "K5",
+    "L4",
+    "L5",
+    "F6",
+    "G5",
+    "E6"
+   ]
+  },
+  {
+   "black": "jev-high",
+   "white": "llm",
+   "winner": "jev-high",
+   "moves": 11,
+   "opening": [
+    "H8",
+    "H7",
+    "G6"
+   ],
+   "record": [
+    "H6",
+    "G7",
+    "G8",
+    "F6",
+    "H9",
+    "I9",
+    "J9",
+    "J10"
+   ]
+  },
+  {
+   "black": "llm",
+   "white": "jev-high",
+   "winner": "jev-high",
+   "moves": 10,
+   "opening": [
+    "H8",
+    "H7",
+    "G6"
+   ],
+   "record": [
+    "G7",
+    "H6",
+    "F7",
+    "I7",
+    "D7",
+    "G8",
+    "E7"
+   ]
+  }
+ ]
+}

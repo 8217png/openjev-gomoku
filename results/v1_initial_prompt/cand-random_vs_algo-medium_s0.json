@@ -1,0 +1,472 @@
+{
+ "summary": {
+  "a": "cand-random",
+  "b": "algo-medium",
+  "games": 20,
+  "score": {
+   "algo-medium": 20
+  },
+  "per_player": {
+   "cand-random": {
+    "wins": 0,
+    "avg_ms_per_move": 0.6,
+    "moves": 85,
+    "missed_win": 0,
+    "missed_block": 16,
+    "llm_retries": 0,
+    "llm_fallbacks": 0
+   },
+   "algo-medium": {
+    "wins": 20,
+    "avg_ms_per_move": 6.6,
+    "moves": 95,
+    "missed_win": 0,
+    "missed_block": 0,
+    "llm_retries": 0,
+    "llm_fallbacks": 0
+   }
+  }
+ },
+ "games": [
+  {
+   "black": "cand-random",
+   "white": "algo-medium",
+   "winner": "algo-medium",
+   "moves": 10,
+   "opening": [
+    "H8",
+    "I7",
+    "H10"
+   ],
+   "record": [
+    "H7",
+    "J10",
+    "G7",
+    "G10",
+    "J7",
+    "K7",
+    "F7"
+   ]
+  },
+  {
+   "black": "algo-medium",
+   "white": "cand-random",
+   "winner": "algo-medium",
+   "moves": 9,
+   "opening": [
+    "H8",
+    "I7",
+    "H10"
+   ],
+   "record": [
+    "I9",
+    "H9",
+    "I10",
+    "H7",
+    "I11",
+    "H6"
+   ]
+  },
+  {
+   "black": "cand-random",
+   "white": "algo-medium",
+   "winner": "algo-medium",
+   "moves": 14,
+   "opening": [
+    "H8",
+    "I6",
+    "H7"
+   ],
+   "record": [
+    "H6",
+    "J6",
+    "I7",
+    "I8",
+    "J8",
+    "K9",
+    "G6",
+    "F8",
+    "G5",
+    "E8",
+    "F4"
+   ]
+  },
+  {
+   "black": "algo-medium",
+   "white": "cand-random",
+   "winner": "algo-medium",
+   "moves": 11,
+   "opening": [
+    "H8",
+    "I6",
+    "H7"
+   ],
+   "record": [
+    "H5",
+    "J7",
+    "H10",
+    "I7",
+    "G9",
+    "G7",
+    "L7",
+    "F7"
+   ]
+  },
+  {
+   "black": "cand-random",
+   "white": "algo-medium",
+   "winner": "algo-medium",
+   "moves": 10,
+   "opening": [
+    "H8",
+    "H7",
+    "G6"
+   ],
+   "record": [
+    "G7",
+    "E7",
+    "I7",
+    "F8",
+    "J7",
+    "K7",
+    "F7"
+   ]
+  },
+  {
+   "black": "algo-medium",
+   "white": "cand-random",
+   "winner": "algo-medium",
+   "moves": 11,
+   "opening": [
+    "H8",
+    "H7",
+    "G6"
+   ],
+   "record": [
+    "I6",
+    "G8",
+    "J8",
+    "E8",
+    "G7",
+    "F8",
+    "I7",
+    "D8"
+   ]
+  },
+  {
+   "black": "cand-random",
+   "white": "algo-medium",
+   "winner": "algo-medium",
+   "moves": 20,
+   "opening": [
+    "H8",
+    "G6",
+    "G8"
+   ],
+   "record": [
+    "I8",
+    "H9",
+    "H7",
+    "F5",
+    "F7",
+    "D9",
+    "H5",
+    "J3",
+    "E8",
+    "I4",
+    "I6",
+    "J9",
+    "J7",
+    "I7",
+    "G4",
+    "K9",
+    "K8"
+   ]
+  },
+  {
+   "black": "algo-medium",
+   "white": "cand-random",
+   "winner": "algo-medium",
+   "moves": 13,
+   "opening": [
+    "H8",
+    "G6",
+    "G8"
+   ],
+   "record": [
+    "F6",
+    "H6",
+    "E6",
+    "D6",
+    "H4",
+    "F8",
+    "E7",
+    "E8",
+    "H7",
+    "D8"
+   ]
+  },
+  {
+   "black": "cand-random",
+   "white": "algo-medium",
+   "winner": "algo-medium",
+   "moves": 16,
+   "opening": [
+    "H8",
+    "J10",
+    "J8"
+   ],
+   "record": [
+    "I8",
+    "J6",
+    "I7",
+    "I10",
+    "J7",
+    "L7",
+    "H7",
+    "K7",
+    "J9",
+    "G7",
+    "G6",
+    "K10",
+    "F5"
+   ]
+  },
+  {
+   "black": "algo-medium",
+   "white": "cand-random",
+   "winner": "algo-medium",
+   "moves": 9,
+   "opening": [
+    "H8",
+    "J10",
+    "J8"
+   ],
+   "record": [
+    "H6",
+    "I8",
+    "F8",
+    "K8",
+    "M8",
+    "G8"
+   ]
+  },
+  {
+   "black": "cand-random",
+   "white": "algo-medium",
+   "winner": "algo-medium",
+   "moves": 14,
+   "opening": [
+    "H8",
+    "G6",
+    "F8"
+   ],
+   "record": [
+    "I8",
+    "I6",
+    "H7",
+    "F5",
+    "F7",
+    "I7",
+    "H5",
+    "J6",
+    "I4",
+    "F10",
+    "E8"
+   ]
+  },
+  {
+   "black": "algo-medium",
+   "white": "cand-random",
+   "winner": "algo-medium",
+   "moves": 13,
+   "opening": [
+    "H8",
+    "G6",
+    "F8"
+   ],
+   "record": [
+    "I8",
+    "H7",
+    "E8",
+    "F7",
+    "F6",
+    "H6",
+    "G7",
+    "H9",
+    "H4",
+    "H10"
+   ]
+  },
+  {
+   "black": "cand-random",
+   "white": "algo-medium",
+   "winner": "algo-medium",
+   "moves": 10,
+   "opening": [
+    "H8",
+    "H10",
+    "J7"
+   ],
+   "record": [
+    "J10",
+    "J6",
+    "I10",
+    "I7",
+    "G10",
+    "J5",
+    "K10"
+   ]
+  },
+  {
+   "black": "algo-medium",
+   "white": "cand-random",
+   "winner": "algo-medium",
+   "moves": 13,
+   "opening": [
+    "H8",
+    "H10",
+    "J7"
+   ],
+   "record": [
+    "J8",
+    "I9",
+    "K11",
+    "I7",
+    "K7",
+    "G7",
+    "F10",
+    "F6",
+    "D4",
+    "J10"
+   ]
+  },
+  {
+   "black": "cand-random",
+   "white": "algo-medium",
+   "winner": "algo-medium",
+   "moves": 16,
+   "opening": [
+    "H8",
+    "H10",
+    "H7"
+   ],
+   "record": [
+    "H9",
+    "F7",
+    "E7",
+    "J9",
+    "K10",
+    "H5",
+    "H4",
+    "J10",
+    "F6",
+    "G6",
+    "G5",
+    "F5",
+    "D8"
+   ]
+  },
+  {
+   "black": "algo-medium",
+   "white": "cand-random",
+   "winner": "algo-medium",
+   "moves": 11,
+   "opening": [
+    "H8",
+    "H10",
+    "H7"
+   ],
+   "record": [
+    "J8",
+    "K7",
+    "J10",
+    "J7",
+    "H6",
+    "I7",
+    "M7",
+    "G7"
+   ]
+  },
+  {
+   "black": "cand-random",
+   "white": "algo-medium",
+   "winner": "algo-medium",
+   "moves": 10,
+   "opening": [
+    "H8",
+    "G6",
+    "I6"
+   ],
+   "record": [
+    "G8",
+    "I4",
+    "G7",
+    "I8",
+    "G9",
+    "I3",
+    "G5"
+   ]
+  },
+  {
+   "black": "algo-medium",
+   "white": "cand-random",
+   "winner": "algo-medium",
+   "moves": 11,
+   "opening": [
+    "H8",
+    "G6",
+    "I6"
+   ],
+   "record": [
+    "H5",
+    "I4",
+    "J5",
+    "I5",
+    "I2",
+    "I7",
+    "F10",
+    "I3"
+   ]
+  },
+  {
+   "black": "cand-random",
+   "white": "algo-medium",
+   "winner": "algo-medium",
+   "moves": 10,
+   "opening": [
+    "H8",
+    "J7",
+    "F8"
+   ],
+   "record": [
+    "I8",
+    "L5",
+    "H9",
+    "F11",
+    "K6",
+    "J9",
+    "G10"
+   ]
+  },
+  {
+   "black": "algo-medium",
+   "white": "cand-random",
+   "winner": "algo-medium",
+   "moves": 9,
+   "opening": [
+    "H8",
+    "J7",
+    "F8"
+   ],
+   "record": [
+    "H9",
+    "I8",
+    "D8",
+    "G8",
+    "J8",
+    "E8"
+   ]
+  }
+ ]
+}

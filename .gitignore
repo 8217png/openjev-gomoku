@@ -1,0 +1,18 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Model weights (download from Hugging Face, see README)
+models/
+
+# Runtime output / local-only
+logs/
+*.log
+.claude/
+.env
+
+# Upstream Hugging Face model card / runtime copies (see https://huggingface.co/apus-ailab/APUS-OpenJev-v1)
+hf/
+README_hf.md

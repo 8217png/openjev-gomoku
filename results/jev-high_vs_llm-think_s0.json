@@ -1,0 +1,79 @@
+{
+ "summary": {
+  "a": "jev-high",
+  "b": "llm-think",
+  "games": 2,
+  "score": {
+   "jev-high": 2
+  },
+  "per_player": {
+   "jev-high": {
+    "wins": 2,
+    "avg_ms_per_move": 456.0,
+    "moves": 11,
+    "missed_win": 0,
+    "missed_block": 0,
+    "llm_retries": 0,
+    "llm_fallbacks": 0
+   },
+   "llm-think": {
+    "wins": 0,
+    "avg_ms_per_move": 191320.5,
+    "moves": 10,
+    "missed_win": 0,
+    "missed_block": 2,
+    "llm_retries": 17,
+    "llm_fallbacks": 4
+   }
+  }
+ },
+ "games": [
+  {
+   "black": "jev-high",
+   "white": "llm-think",
+   "winner": "jev-high",
+   "moves": 9,
+   "opening": [
+    "H8",
+    "I7",
+    "H10"
+   ],
+   "record": [
+    "J8",
+    "H9",
+    "H11",
+    "H7",
+    "L10",
+    "H6"
+   ]
+  },
+  {
+   "black": "llm-think",
+   "white": "jev-high",
+   "winner": "jev-high",
+   "moves": 18,
+   "opening": [
+    "H8",
+    "I7",
+    "H10"
+   ],
+   "record": [
+    "H7",
+    "H9",
+    "G7",
+    "H11",
+    "H12",
+    "F7",
+    "G8",
+    "G6",
+    "J7",
+    "K7",
+    "I6",
+    "I8",
+    "F9",
+    "J8",
+    "E10"
+   ]
+  }
+ ]
+}

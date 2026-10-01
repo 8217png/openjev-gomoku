@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>OpenJev 五子棋竞技场</title>
+<style>
+  :root { --bg:#f4f1ea; --panel:#fff; --ink:#222; --muted:#777; --accent:#0a7f73; --border:#ddd6c8; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background:var(--bg); color:var(--ink); }
+  header { padding:14px 24px; display:flex; align-items:center; gap:16px; border-bottom:1px solid var(--border); background:#fff; }
+  header h1 { font-size:20px; margin:0; }
+  .dot { display:inline-block; width:9px; height:9px; border-radius:50%; background:#bbb; margin-right:4px; }
+  .dot.ok { background:#2ba84a; } .dot.bad { background:#d64545; }
+  .status { font-size:13px; color:var(--muted); display:flex; gap:14px; }
+  main { display:flex; gap:20px; padding:20px; align-items:flex-start; }
+  #setup, #side { flex:none; }
+  #center { flex:0 1 630px; min-width:360px; }
+  .panel { background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:14px 16px; }
+  #setup { width:290px; }
+  #setup h3, #side h3 { margin:4px 0 10px; font-size:15px; }
+  .side-cfg { border:1px solid var(--border); border-radius:8px; padding:10px; margin-bottom:10px; }
+  .side-cfg .title { font-weight:600; margin-bottom:6px; display:flex; align-items:center; gap:6px; }
+  .stone { width:14px; height:14px; border-radius:50%; display:inline-block; border:1px solid #333; }
+  .stone.b { background:radial-gradient(circle at 35% 35%, #666, #000); }
+  .stone.w { background:radial-gradient(circle at 35% 35%, #fff, #ccc); }
+  label { font-size:13px; display:block; margin:5px 0 2px; color:#444; }
+  select, input[type=text], input[type=number] { width:100%; padding:5px 6px; border:1px solid #ccc; border-radius:6px; font-size:13px; }
+  .opts { margin-top:4px; }
+  .row { display:flex; gap:8px; }
+  button { padding:8px 12px; border:none; border-radius:7px; background:var(--accent); color:#fff; font-size:14px; cursor:pointer; }
+  button.secondary { background:#e7e2d7; color:#333; }
+  button:disabled { opacity:.5; cursor:default; }
+  .presets { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; }
+  .presets button { font-size:12px; padding:5px 8px; background:#fff; color:#111; border:1px solid #bbb; }
+  .presets button.active { background:#e9f3f1; color:var(--accent); border-color:#bfe0da; font-weight:600; }
+  #boardWrap { position:relative; }
+  canvas { border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,.15); cursor:pointer; display:block; width:100%; height:auto; }
+  #banner { text-align:center; font-size:16px; font-weight:600; margin:10px 0 0; min-height:24px; }
+  #side { width:380px; }
+  #log { max-height:calc(100vh - 170px); overflow:auto; font-size:12.5px; }
+  .mv { border-bottom:1px dashed #eee; padding:6px 2px; }
+  .mv .h { display:flex; gap:8px; align-items:center; }
+  .mv .who { color:var(--muted); }
+  .mv .meta { color:#555; margin-top:3px; white-space:pre-wrap; word-break:break-word; }
+  .bar { height:6px; background:#0a7f73; border-radius:3px; display:inline-block; vertical-align:middle; margin-left:4px; }
+  .score { font-size:13px; margin-top:8px; color:#444; }
+  .err { color:#c0392b; font-size:13px; }
+  #btnHow { margin-left:auto; }
+  #howMask { display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:10; align-items:center; justify-content:center; }
+  #howMask.show { display:flex; }
+  #how { background:#fff; border-radius:12px; width:min(860px, 92vw); max-height:88vh; overflow:auto; padding:22px 28px; position:relative; font-size:14px; line-height:1.7; }
+  #how h2 { margin:0 0 6px; font-size:20px; } #how h3 { margin:18px 0 6px; font-size:16px; color:var(--accent); }
+  #how .close { position:absolute; right:14px; top:12px; background:#eee; color:#333; padding:4px 10px; }
+  .flow { display:flex; align-items:stretch; gap:6px; flex-wrap:wrap; margin:8px 0; }
+  .flow div { flex:1 1 140px; background:#f6f3ec; border:1px solid var(--border); border-radius:8px; padding:8px 10px; font-size:13px; }
+  .flow div b { display:block; color:var(--accent); } .flow span { align-self:center; color:#999; }
+  #how pre { background:#1f2328; color:#e6e6e6; padding:10px 12px; border-radius:8px; font-size:12px; overflow:auto; line-height:1.5; }
+  #how table { border-collapse:collapse; width:100%; font-size:13px; } #how td, #how th { border:1px solid #e3ddd0; padding:4px 8px; text-align:left; }
+  #how th { background:#f6f3ec; }
+  .tag { font-size:11px; background:#f1eee7; padding:1px 5px; border-radius:4px; margin-left:4px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>OpenJev 五子棋竞技场</h1>
+  <div class="status">
+    <span><span id="dJev" class="dot"></span>JEV 决策服务</span>
+    <span><span id="dLlm" class="dot"></span>大模型服务</span>
+  </div>
+  <button id="btnHow">JEV 下棋原理</button>
+</header>
+<div id="howMask"><div id="how">
+  <button class="close" id="howClose">关闭 ✕</button>
+  <h2>JEV 是怎么下五子棋的？</h2>
+  <p>JEV 使用 <b>APUS-OpenJev-v1（9B）</b>。它不是聊天模型，而是<b>决策模型</b>：给它“局面 + 任务 + 2~16 个候选”，
+  它只对候选打分，返回选中的候选和每个候选的概率，不会自由生成文字。所以 JEV 下棋采用“<b>算法提名，模型拍板</b>”的方式。</p>
+
+  <h3>一步棋的流程</h3>
+  <div class="flow">
+    <div><b>① 候选生成</b>算法按棋型评分（进攻 + 防守）从空位中选出前 10 个候选点</div><span>→</span>
+    <div><b>② 战术描述</b>给每个候选写出“进攻效果 / 防守效果”，例如“形成活三”“堵住对手成五”</div><span>→</span>
+    <div><b>③ 组装请求</b>state：ASCII 棋盘 + 最近落子 + 双方威胁摘要；instructions：优先级规则</div><span>→</span>
+    <div><b>④ 模型打分</b>候选被标成 A~J，OpenJev 在答案位置只比较这些标签的 logits，softmax 得到概率</div><span>→</span>
+    <div><b>⑤ 投票落子</b>打乱顺序再问一次，两次概率取平均，选概率最高的点</div>
+  </div>
+
+  <h3>为什么要这样设计</h3>
+  <table>
+    <tr><th>设计</th><th>原因</th></tr>
+    <tr><td>由算法提供候选</td><td>模型一次最多只能在 16 个选项里选，且只能选择不能生成坐标；这样也保证每一步都合法。</td></tr>
+    <tr><td>候选附带战术描述 + 威胁摘要</td><td>模型从文字理解局面比从棋盘图“看”几何关系可靠得多；初版只有简单描述时，对简单算法仅 2:18。</td></tr>
+    <tr><td>打乱候选顺序</td><td>避免模型直接沿用算法排序，让决策真正来自模型。</td></tr>
+    <tr><td>两次投票取平均</td><td>测试发现模型偏好某些字母位置（如 C），换顺序平均可以抵消这种偏置。</td></tr>
+    <tr><td>effort：high / low</td><td>high 执行全部 32 层；low 在第 16 层提前退出、只投影候选标签，更快但更弱（下棋时漏堵明显）。</td></tr>
+  </table>
+
+  <h3>发送给模型的请求（示意）</h3>
+<pre>{
+  "state": "Gomoku ... 15x15 board ...\n    A B C D E ...\n15  . . . ...\n...\nIt is Black's (X) turn.\n
+            Threat analysis: Opponent has an open three: they make an open four at G5, K9 ...",
+  "instructions": "You are Black (X). Choose the strongest next move. Priorities: 1) WIN ... 2) BLOCK five ...",
+  "criteria": [
+    {"id": "G5", "description": "Play X at G5. Attack: builds an open two. Defence: blocks the opponent's open-four point."},
+    {"id": "G8", "description": "Play X at G8. Attack: creates an open three. Defence: no defensive effect."},
+    ...
+  ],
+  "effort": "high"
+}
+→ {"choice": "G5", "probabilities": {"G5": 0.61, "G8": 0.27, ...}, "executed_layers": 32}</pre>
+
+  <h3>当前对局中 JEV 最近一次决策</h3>
+  <div id="howLive"></div>
+
+  <h3>实测表现</h3>
+  <p>JEV(high) 对大模型 Qwen3.5-9B 8:0；对算法 简单 8:8（4 平）、中等 7:12、困难 2:18；必胜/必堵着法从未漏掉。
+  强度与“总是选算法第一候选”相当，说明模型在认真读描述做判断，但尚未超越提供候选的算法本身。</p>
+</div></div>
+<main>
+  <section id="setup" class="panel">
+    <h3>对局设置</h3>
+    <div class="presets">
+      <button data-p="human,jev">人 vs JEV</button>
+      <button data-p="jev,llm">JEV vs 大模型</button>
+      <button data-p="jev,algo">JEV vs 算法</button>
+      <button data-p="algo,jev">算法 vs JEV</button>
+      <button data-p="llm,jev">大模型 vs JEV</button>
+      <button data-p="human,algo">人 vs 算法</button>
+    </div>
+    <div id="cfgBlack" class="side-cfg"></div>
+    <div id="cfgWhite" class="side-cfg"></div>
+    <label><input type="checkbox" id="autoplay" checked style="width:auto"> AI 自动连续落子</label>
+    <label>AI 落子间隔 (ms)</label>
+    <input type="number" id="delay" value="300" min="0" step="100" />
+    <div class="row" style="margin-top:12px">
+      <button id="btnNew">开始新对局</button>
+      <button id="btnStep" class="secondary">AI 走一步</button>
+      <button id="btnUndo" class="secondary">悔棋</button>
+    </div>
+    <div class="score" id="score"></div>
+  </section>
+
+  <section id="center">
+    <div id="boardWrap"><canvas id="board" width="630" height="630"></canvas></div>
+    <div id="banner"></div>
+    <div id="err" class="err"></div>
+  </section>
+
+  <section id="side" class="panel">
+    <h3>棋谱与决策详情</h3>
+    <div id="log"></div>
+  </section>
+</main>
+
+<script>
+const N = 15, CELL = 40, PAD = 35, COLS = "ABCDEFGHIJKLMNO";
+const cv = document.getElementById("board"), ctx = cv.getContext("2d");
+let game = null, busy = false, hover = null;
+const tally = JSON.parse(sessionStorage.getItem("tally") || "{}");
+
+const TYPES = { human: "人类玩家", jev: "JEV (APUS-OpenJev)", llm: "大模型 (LLM)", algo: "五子棋算法机器人" };
+function cfgHtml(side, name, stone) {
+  return `<div class="title"><span class="stone ${stone}"></span>${name}</div>
+  <select id="${side}Type">${Object.entries(TYPES).map(([k, v]) => `<option value="${k}">${v}</option>`).join("")}</select>
+  <div class="opts" id="${side}Opts"></div>`;
+}
+function optsHtml(side, type) {
+  if (type === "jev") return `<label>计算深度 effort</label><select id="${side}Effort"><option value="high">high (32 层)</option><option value="low">low (16 层)</option></select>
+    <label>候选点数量 (2-16)</label><input type="number" id="${side}Cands" value="10" min="2" max="16" />`;
+  if (type === "algo") return `<label>难度</label><select id="${side}Level"><option value="easy">简单</option><option value="medium">中等</option><option value="hard" selected>困难</option><option value="expert">专家</option></select>`;
+  if (type === "llm") return `<label>模型名</label><input type="text" id="${side}Model" placeholder="默认 qwen3.5-9b" />
+    <label>Base URL（OpenAI 兼容，可留空）</label><input type="text" id="${side}Url" placeholder="默认本地 llama.cpp" />
+    <label>API Key（可留空）</label><input type="text" id="${side}Key" />
+    <label><input type="checkbox" id="${side}Think" style="width:auto"> 开启思考模式（更慢）</label>`;
+  return "";
+}
+for (const [side, name, stone] of [["black", "黑方（先手）", "b"], ["white", "白方", "w"]]) {
+  const box = document.getElementById(side === "black" ? "cfgBlack" : "cfgWhite");
+  box.innerHTML = cfgHtml(side, name, stone);
+  const sel = document.getElementById(side + "Type");
+  sel.onchange = () => { document.getElementById(side + "Opts").innerHTML = optsHtml(side, sel.value); markPreset(); };
+}
+function markPreset() {
+  const cur = ["black", "white"].map(s => document.getElementById(s + "Type")?.value).join(",");
+  document.querySelectorAll(".presets button").forEach(b => b.classList.toggle("active", b.dataset.p === cur));
+}
+function setType(side, t) { const s = document.getElementById(side + "Type"); s.value = t; s.onchange(); }
+setType("black", "human"); setType("white", "jev");
+document.querySelectorAll(".presets button").forEach(b => b.onclick = () => {
+  const [bl, wh] = b.dataset.p.split(","); setType("black", bl); setType("white", wh);
+});
+
+function spec(side) {
+  const t = document.getElementById(side + "Type").value, v = id => document.getElementById(side + id);
+  if (t === "jev") return { type: t, effort: v("Effort").value, candidates: +v("Cands").value };
+  if (t === "algo") return { type: t, level: v("Level").value };
+  if (t === "llm") return { type: t, model: v("Model").value || undefined, base_url: v("Url").value || undefined,
+                            api_key: v("Key").value || undefined, thinking: v("Think").checked };
+  return { type: "human" };
+}
+
+async function api(path, body) {
+  const r = await fetch(path, { method: body === undefined ? "GET" : "POST",
+    headers: { "content-type": "application/json" }, body: body === undefined ? undefined : JSON.stringify(body) });
+  const data = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(data.detail || r.statusText);
+  return data;
+}
+
+function draw() {
+  ctx.fillStyle = "#dcb35c"; ctx.fillRect(0, 0, cv.width, cv.height);
+  ctx.strokeStyle = "#5a4312"; ctx.lineWidth = 1; ctx.fillStyle = "#3b2c0c"; ctx.font = "12px sans-serif";
+  for (let i = 0; i < N; i++) {
+    const p = PAD + i * CELL;
+    ctx.beginPath(); ctx.moveTo(PAD, p); ctx.lineTo(PAD + (N - 1) * CELL, p); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(p, PAD); ctx.lineTo(p, PAD + (N - 1) * CELL); ctx.stroke();
+    ctx.textAlign = "center"; ctx.fillText(COLS[i], p, PAD - 18);
+    ctx.textAlign = "right"; ctx.fillText(String(N - i), PAD - 14, p + 4);
+  }
+  for (const [r, c] of [[3,3],[3,11],[11,3],[11,11],[7,7]]) {
+    ctx.beginPath(); ctx.arc(PAD + c * CELL, PAD + r * CELL, 4, 0, 7); ctx.fill();
+  }
+  if (!game) return;
+  const last = game.moves[game.moves.length - 1];
+  game.moves.forEach((m, i) => {
+    const [r, c] = m.rc, x = PAD + c * CELL, y = PAD + r * CELL;
+    const g = ctx.createRadialGradient(x - 6, y - 6, 2, x, y, 18);
+    if (m.player === 1) { g.addColorStop(0, "#777"); g.addColorStop(1, "#000"); }
+    else { g.addColorStop(0, "#fff"); g.addColorStop(1, "#c8c8c8"); }
+    ctx.beginPath(); ctx.arc(x, y, 17, 0, 7); ctx.fillStyle = g; ctx.fill();
+    ctx.fillStyle = m.player === 1 ? "#fff" : "#000"; ctx.font = "11px sans-serif"; ctx.textAlign = "center";
+    ctx.fillText(i + 1, x, y + 4);
+  });
+  if (last) {
+    const [r, c] = last.rc; ctx.strokeStyle = "#e33"; ctx.lineWidth = 2;
+    ctx.strokeRect(PAD + c * CELL - 19, PAD + r * CELL - 19, 38, 38);
+  }
+  if (game.win_line.length) {
+    const a = game.win_line[0], b = game.win_line[game.win_line.length - 1];
+    ctx.strokeStyle = "rgba(220,30,30,.8)"; ctx.lineWidth = 5; ctx.beginPath();
+    ctx.moveTo(PAD + a[1] * CELL, PAD + a[0] * CELL); ctx.lineTo(PAD + b[1] * CELL, PAD + b[0] * CELL); ctx.stroke();
+  }
+  if (hover && humanTurn() && !game.grid[hover[0]][hover[1]]) {
+    ctx.beginPath(); ctx.arc(PAD + hover[1] * CELL, PAD + hover[0] * CELL, 16, 0, 7);
+    ctx.fillStyle = game.to_move === 1 ? "rgba(0,0,0,.35)" : "rgba(255,255,255,.6)"; ctx.fill();
+  }
+}
+
+function humanTurn() { return game && !game.winner && !game.draw && !game.to_move_is_ai; }
+function cellAt(e) {
+  const rect = cv.getBoundingClientRect(), k = cv.width / rect.width;  // canvas may be CSS-scaled
+  const c = Math.round(((e.clientX - rect.left) * k - PAD) / CELL), r = Math.round(((e.clientY - rect.top) * k - PAD) / CELL);
+  return r >= 0 && r < N && c >= 0 && c < N ? [r, c] : null;
+}
+cv.onmousemove = e => { hover = cellAt(e); draw(); };
+cv.onmouseleave = () => { hover = null; draw(); };
+cv.onclick = async e => {
+  const rc = cellAt(e);
+  if (!rc || busy || !humanTurn() || game.grid[rc[0]][rc[1]]) return;
+  try { update(await api(`/api/games/${game.id}/move`, { r: rc[0], c: rc[1] })); } catch (err) { showErr(err); }
+  maybeAi();
+};
+
+function name(p) { return p === 1 ? game.players.black : game.players.white; }
+function update(g) {
+  game = g; draw(); renderLog();
+  const b = document.getElementById("banner");
+  if (g.winner) {
+    const w = g.winner === 1 ? "黑方" : "白方";
+    b.textContent = `🏆 ${w}（${name(g.winner)}）获胜！共 ${g.moves.length} 手`;
+    recordResult(g);
+  } else if (g.draw) { b.textContent = "平局"; recordResult(g); }
+  else b.textContent = `轮到 ${g.to_move === 1 ? "黑方 ●" : "白方 ○"}：${name(g.to_move)}${g.to_move_is_ai ? "（思考中…）" : ""}`;
+  document.getElementById("err").textContent = g.error || "";
+}
+function showErr(e) { document.getElementById("err").textContent = "错误：" + e.message; }
+
+function renderLog() {
+  const el = document.getElementById("log");
+  el.innerHTML = game.moves.slice().reverse().map(m => {
+    const meta = m.meta || {}; let extra = "";
+    if (meta.top) extra += "候选概率：" + meta.top.map(t => `${t.coord} ${(t.p * 100).toFixed(1)}%<span class="bar" style="width:${Math.max(2, t.p * 60)}px"></span>`).join("  ")
+      + `\n层数 ${meta.executed_layers} · ${meta.prompt_tokens} tokens · 模型 ${meta.model_ms} ms`;
+    if (meta.candidates) {
+      const pick = meta.candidates.find(c => c.coord === m.coord);
+      if (pick) extra += `\n选中理由：${pick.tags.join("；")}`;
+    }
+    if (meta.reply !== undefined) extra += `LLM 回复：${meta.reply.slice(-240)}\n尝试 ${meta.attempts} 次 · ${meta.ms} ms${meta.fallback ? " · ⚠ 非法走子，已兜底随机" : ""}`;
+    if (meta.reason) extra += `算法：${meta.reason}${meta.nodes ? " · 节点 " + meta.nodes : ""} · ${meta.ms} ms`;
+    return `<div class="mv"><div class="h"><span class="stone ${m.player === 1 ? "b" : "w"}"></span><b>${m.n}. ${m.coord}</b><span class="who">${m.who}</span></div>${extra ? `<div class="meta">${extra}</div>` : ""}</div>`;
+  }).join("");
+}
+
+function recordResult(g) {
+  if (g._recorded || tally[g.id]) return;
+  const key = `${g.players.black} vs ${g.players.white}`;
+  tally[g.id] = { key, winner: g.winner };
+  sessionStorage.setItem("tally", JSON.stringify(tally)); renderScore();
+}
+function renderScore() {
+  const agg = {};
+  Object.values(tally).forEach(({ key, winner }) => {
+    agg[key] = agg[key] || [0, 0, 0]; agg[key][winner === 1 ? 0 : winner === 2 ? 1 : 2]++;
+  });
+  document.getElementById("score").innerHTML = Object.keys(agg).length ? "<b>本次会话战绩（黑胜/白胜/平）</b><br>" +
+    Object.entries(agg).map(([k, v]) => `${k}：${v.join(" / ")}`).join("<br>") : "";
+}
+
+async function stepAi() {
+  if (!game || busy || !game.to_move_is_ai) return false;
+  busy = true;
+  try { update(await api(`/api/games/${game.id}/ai`, {})); return true; }
+  catch (err) { showErr(err); return false; }
+  finally { busy = false; }
+}
+async function maybeAi() {
+  while (game && game.to_move_is_ai) {
+    const ok = await stepAi();
+    if (!ok || !document.getElementById("autoplay").checked) break;
+    await new Promise(r => setTimeout(r, +document.getElementById("delay").value || 0));
+  }
+}
+
+document.getElementById("btnNew").onclick = async () => {
+  try { update(await api("/api/games", { black: spec("black"), white: spec("white") })); maybeAi(); }
+  catch (err) { showErr(err); }
+};
+document.getElementById("btnStep").onclick = () => stepAi();
+document.getElementById("btnUndo").onclick = async () => { if (game && !busy) update(await api(`/api/games/${game.id}/undo`, {})); };
+
+async function pollStatus() {
+  try {
+    const s = await api("/api/status");
+    document.getElementById("dJev").className = "dot " + (s.jev.ok ? "ok" : "bad");
+    document.getElementById("dLlm").className = "dot " + (s.llm.ok ? "ok" : "bad");
+  } catch { }
+}
+function renderHowLive() {
+  const el = document.getElementById("howLive");
+  const m = game && game.moves.slice().reverse().find(x => x.meta && x.meta.candidates);
+  if (!m) { el.innerHTML = "<p style='color:#888'>当前对局中还没有 JEV 的落子。开始一局含 JEV 的对局后，这里会展示它最近一步看到的候选与概率。</p>"; return; }
+  const p = Object.fromEntries((m.meta.top || []).map(t => [t.coord, t.p]));
+  const rows = m.meta.candidates.slice().sort((a, b) => (p[b.coord] || 0) - (p[a.coord] || 0)).map(c =>
+    `<tr${c.coord === m.coord ? " style='background:#e9f3f1;font-weight:600'" : ""}><td>${c.coord}</td><td>${p[c.coord] !== undefined ? (p[c.coord] * 100).toFixed(1) + "%" : "—（未进前5）"}</td><td>${c.tags.join("<br>")}</td></tr>`).join("");
+  el.innerHTML = `<p>第 ${m.n} 手，${m.who} 选择 <b>${m.coord}</b>（${m.meta.votes || 1} 次投票，${m.meta.executed_layers} 层，${m.meta.prompt_tokens} tokens，模型耗时 ${m.meta.model_ms} ms）</p>
+    <table><tr><th>候选</th><th>概率</th><th>算法给出的战术描述</th></tr>${rows}</table>`;
+}
+const howMask = document.getElementById("howMask");
+document.getElementById("btnHow").onclick = () => { renderHowLive(); howMask.classList.add("show"); };
+document.getElementById("howClose").onclick = () => howMask.classList.remove("show");
+howMask.onclick = e => { if (e.target === howMask) howMask.classList.remove("show"); };
+document.addEventListener("keydown", e => { if (e.key === "Escape") howMask.classList.remove("show"); });
+pollStatus(); setInterval(pollStatus, 10000); draw(); renderScore();
+</script>
+</body>
+</html>

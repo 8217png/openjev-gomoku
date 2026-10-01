@@ -1,0 +1,124 @@
+{
+ "summary": {
+  "a": "cand-top1",
+  "b": "llm",
+  "games": 4,
+  "score": {
+   "cand-top1": 4
+  },
+  "per_player": {
+   "cand-top1": {
+    "wins": 4,
+    "avg_ms_per_move": 0.7,
+    "moves": 21,
+    "missed_win": 0,
+    "missed_block": 0,
+    "llm_retries": 0,
+    "llm_fallbacks": 0
+   },
+   "llm": {
+    "wins": 0,
+    "avg_ms_per_move": 14358.8,
+    "moves": 19,
+    "missed_win": 0,
+    "missed_block": 3,
+    "llm_retries": 17,
+    "llm_fallbacks": 5
+   }
+  }
+ },
+ "games": [
+  {
+   "black": "cand-top1",
+   "white": "llm",
+   "winner": "cand-top1",
+   "moves": 13,
+   "opening": [
+    "H8",
+    "I7",
+    "H10"
+   ],
+   "record": [
+    "H9",
+    "J8",
+    "I8",
+    "I9",
+    "K7",
+    "J7",
+    "J6",
+    "G11",
+    "L8",
+    "F12"
+   ]
+  },
+  {
+   "black": "llm",
+   "white": "cand-top1",
+   "winner": "cand-top1",
+   "moves": 16,
+   "opening": [
+    "H8",
+    "I7",
+    "H10"
+   ],
+   "record": [
+    "H9",
+    "G9",
+    "F8",
+    "G7",
+    "I9",
+    "G6",
+    "G8",
+    "H7",
+    "I8",
+    "J10",
+    "I10",
+    "K9",
+    "I11"
+   ]
+  },
+  {
+   "black": "cand-top1",
+   "white": "llm",
+   "winner": "cand-top1",
+   "moves": 13,
+   "opening": [
+    "H8",
+    "I6",
+    "H7"
+   ],
+   "record": [
+    "H5",
+    "J7",
+    "I7",
+    "I8",
+    "J9",
+    "H9",
+    "G8",
+    "H10",
+    "F8",
+    "H6"
+   ]
+  },
+  {
+   "black": "llm",
+   "white": "cand-top1",
+   "winner": "cand-top1",
+   "moves": 10,
+   "opening": [
+    "H8",
+    "I6",
+    "H7"
+   ],
+   "record": [
+    "H6",
+    "I7",
+    "J6",
+    "J5",
+    "K6",
+    "L6",
+    "G6"
+   ]
+  }
+ ]
+}

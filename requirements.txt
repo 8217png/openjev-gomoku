@@ -1,0 +1,12 @@
+fastapi==0.142.1
+uvicorn==0.54.0
+httpx==0.28.1
+pydantic==2.13.5
+# OpenJev official runtime requirements
+torch==2.8.0
+transformers==5.16.1
+safetensors==0.8.0
+huggingface_hub
+# dev / tests
+pytest
+playwright

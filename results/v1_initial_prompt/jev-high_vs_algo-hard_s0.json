@@ -1,0 +1,558 @@
+{
+ "summary": {
+  "a": "jev-high",
+  "b": "algo-hard",
+  "games": 20,
+  "score": {
+   "algo-hard": 20
+  },
+  "per_player": {
+   "jev-high": {
+    "wins": 0,
+    "avg_ms_per_move": 256.4,
+    "moves": 128,
+    "missed_win": 0,
+    "missed_block": 5,
+    "llm_retries": 0,
+    "llm_fallbacks": 0
+   },
+   "algo-hard": {
+    "wins": 20,
+    "avg_ms_per_move": 121.2,
+    "moves": 138,
+    "missed_win": 0,
+    "missed_block": 0,
+    "llm_retries": 0,
+    "llm_fallbacks": 0
+   }
+  }
+ },
+ "games": [
+  {
+   "black": "jev-high",
+   "white": "algo-hard",
+   "winner": "algo-hard",
+   "moves": 16,
+   "opening": [
+    "H8",
+    "I7",
+    "H10"
+   ],
+   "record": [
+    "H7",
+    "K7",
+    "G7",
+    "J7",
+    "I8",
+    "I9",
+    "J8",
+    "F7",
+    "G6",
+    "H6",
+    "F5",
+    "J9",
+    "E4"
+   ]
+  },
+  {
+   "black": "algo-hard",
+   "white": "jev-high",
+   "winner": "algo-hard",
+   "moves": 11,
+   "opening": [
+    "H8",
+    "I7",
+    "H10"
+   ],
+   "record": [
+    "H9",
+    "I9",
+    "J8",
+    "J10",
+    "I10",
+    "G7",
+    "F6",
+    "K11"
+   ]
+  },
+  {
+   "black": "jev-high",
+   "white": "algo-hard",
+   "winner": "algo-hard",
+   "moves": 10,
+   "opening": [
+    "H8",
+    "I6",
+    "H7"
+   ],
+   "record": [
+    "H6",
+    "F6",
+    "J6",
+    "G7",
+    "K6",
+    "L6",
+    "G6"
+   ]
+  },
+  {
+   "black": "algo-hard",
+   "white": "jev-high",
+   "winner": "algo-hard",
+   "moves": 13,
+   "opening": [
+    "H8",
+    "I6",
+    "H7"
+   ],
+   "record": [
+    "H6",
+    "G6",
+    "I8",
+    "I7",
+    "J6",
+    "J7",
+    "F7",
+    "K7",
+    "G7",
+    "L7"
+   ]
+  },
+  {
+   "black": "jev-high",
+   "white": "algo-hard",
+   "winner": "algo-hard",
+   "moves": 14,
+   "opening": [
+    "H8",
+    "H7",
+    "G6"
+   ],
+   "record": [
+    "G7",
+    "I7",
+    "G9",
+    "H6",
+    "E7",
+    "F7",
+    "F8",
+    "I6",
+    "D6",
+    "F6",
+    "H10"
+   ]
+  },
+  {
+   "black": "algo-hard",
+   "white": "jev-high",
+   "winner": "algo-hard",
+   "moves": 17,
+   "opening": [
+    "H8",
+    "H7",
+    "G6"
+   ],
+   "record": [
+    "G7",
+    "I7",
+    "J6",
+    "F7",
+    "I4",
+    "F8",
+    "G8",
+    "F9",
+    "F6",
+    "G9",
+    "H9",
+    "F10",
+    "E7",
+    "F11"
+   ]
+  },
+  {
+   "black": "jev-high",
+   "white": "algo-hard",
+   "winner": "algo-hard",
+   "moves": 14,
+   "opening": [
+    "H8",
+    "G6",
+    "G8"
+   ],
+   "record": [
+    "E8",
+    "I8",
+    "J8",
+    "F7",
+    "E6",
+    "F6",
+    "E7",
+    "G7",
+    "E5",
+    "E9",
+    "E4"
+   ]
+  },
+  {
+   "black": "algo-hard",
+   "white": "jev-high",
+   "winner": "algo-hard",
+   "moves": 21,
+   "opening": [
+    "H8",
+    "G6",
+    "G8"
+   ],
+   "record": [
+    "I8",
+    "H7",
+    "H9",
+    "J7",
+    "G7",
+    "I6",
+    "F9",
+    "J5",
+    "K4",
+    "J6",
+    "J8",
+    "G9",
+    "I7",
+    "H5",
+    "H6",
+    "G4",
+    "K9",
+    "K8"
+   ]
+  },
+  {
+   "black": "jev-high",
+   "white": "algo-hard",
+   "winner": "algo-hard",
+   "moves": 26,
+   "opening": [
+    "H8",
+    "J10",
+    "J8"
+   ],
+   "record": [
+    "L8",
+    "I8",
+    "G8",
+    "I11",
+    "H10",
+    "I10",
+    "I9",
+    "G9",
+    "J6",
+    "F10",
+    "E11",
+    "K7",
+    "E9",
+    "E8",
+    "E10",
+    "F9",
+    "F12",
+    "E12",
+    "G13",
+    "C9",
+    "H14",
+    "D10",
+    "I15"
+   ]
+  },
+  {
+   "black": "algo-hard",
+   "white": "jev-high",
+   "winner": "algo-hard",
+   "moves": 11,
+   "opening": [
+    "H8",
+    "J10",
+    "J8"
+   ],
+   "record": [
+    "G8",
+    "H6",
+    "H7",
+    "I7",
+    "J6",
+    "K9",
+    "G5",
+    "L10"
+   ]
+  },
+  {
+   "black": "jev-high",
+   "white": "algo-hard",
+   "winner": "algo-hard",
+   "moves": 20,
+   "opening": [
+    "H8",
+    "G6",
+    "F8"
+   ],
+   "record": [
+    "I8",
+    "H7",
+    "H9",
+    "J7",
+    "F7",
+    "I7",
+    "K7",
+    "G9",
+    "J6",
+    "E7",
+    "H10",
+    "G8",
+    "E8",
+    "I6",
+    "H5",
+    "D9",
+    "I4"
+   ]
+  },
+  {
+   "black": "algo-hard",
+   "white": "jev-high",
+   "winner": "algo-hard",
+   "moves": 11,
+   "opening": [
+    "H8",
+    "G6",
+    "F8"
+   ],
+   "record": [
+    "G8",
+    "G9",
+    "I7",
+    "H10",
+    "H9",
+    "E7",
+    "I11",
+    "D6"
+   ]
+  },
+  {
+   "black": "jev-high",
+   "white": "algo-hard",
+   "winner": "algo-hard",
+   "moves": 12,
+   "opening": [
+    "H8",
+    "H10",
+    "J7"
+   ],
+   "record": [
+    "F8",
+    "E7",
+    "F10",
+    "G10",
+    "F9",
+    "H9",
+    "F11",
+    "F7",
+    "F12"
+   ]
+  },
+  {
+   "black": "algo-hard",
+   "white": "jev-high",
+   "winner": "algo-hard",
+   "moves": 17,
+   "opening": [
+    "H8",
+    "H10",
+    "J7"
+   ],
+   "record": [
+    "J8",
+    "K7",
+    "H7",
+    "M7",
+    "L7",
+    "L8",
+    "J6",
+    "K5",
+    "K6",
+    "J10",
+    "L6",
+    "K9",
+    "I6",
+    "I11"
+   ]
+  },
+  {
+   "black": "jev-high",
+   "white": "algo-hard",
+   "winner": "algo-hard",
+   "moves": 16,
+   "opening": [
+    "H8",
+    "H10",
+    "H7"
+   ],
+   "record": [
+    "H5",
+    "J7",
+    "F7",
+    "I7",
+    "K7",
+    "J6",
+    "K5",
+    "J5",
+    "J8",
+    "I6",
+    "I9",
+    "G8",
+    "G11"
+   ]
+  },
+  {
+   "black": "algo-hard",
+   "white": "jev-high",
+   "winner": "algo-hard",
+   "moves": 15,
+   "opening": [
+    "H8",
+    "H10",
+    "H7"
+   ],
+   "record": [
+    "H6",
+    "I7",
+    "G7",
+    "F8",
+    "G9",
+    "G8",
+    "I8",
+    "F9",
+    "F7",
+    "I6",
+    "E10",
+    "J5"
+   ]
+  },
+  {
+   "black": "jev-high",
+   "white": "algo-hard",
+   "winner": "algo-hard",
+   "moves": 42,
+   "opening": [
+    "H8",
+    "G6",
+    "I6"
+   ],
+   "record": [
+    "H5",
+    "I4",
+    "I8",
+    "H7",
+    "J5",
+    "I5",
+    "I3",
+    "H9",
+    "H10",
+    "G8",
+    "I10",
+    "I9",
+    "G10",
+    "J10",
+    "G7",
+    "G9",
+    "F10",
+    "E10",
+    "F9",
+    "J9",
+    "K9",
+    "J11",
+    "J8",
+    "J12",
+    "J13",
+    "K11",
+    "L12",
+    "H11",
+    "I11",
+    "I7",
+    "F8",
+    "J6",
+    "K5",
+    "F7",
+    "L6",
+    "K7",
+    "J4",
+    "M7",
+    "H2"
+   ]
+  },
+  {
+   "black": "algo-hard",
+   "white": "jev-high",
+   "winner": "algo-hard",
+   "moves": 13,
+   "opening": [
+    "H8",
+    "G6",
+    "I6"
+   ],
+   "record": [
+    "H6",
+    "I7",
+    "J6",
+    "G8",
+    "H7",
+    "I8",
+    "I9",
+    "J8",
+    "F8",
+    "K8"
+   ]
+  },
+  {
+   "black": "jev-high",
+   "white": "algo-hard",
+   "winner": "algo-hard",
+   "moves": 12,
+   "opening": [
+    "H8",
+    "J7",
+    "F8"
+   ],
+   "record": [
+    "I8",
+    "H9",
+    "H7",
+    "K7",
+    "J9",
+    "J10",
+    "K10",
+    "G6",
+    "L11"
+   ]
+  },
+  {
+   "black": "algo-hard",
+   "white": "jev-high",
+   "winner": "algo-hard",
+   "moves": 15,
+   "opening": [
+    "H8",
+    "J7",
+    "F8"
+   ],
+   "record": [
+    "G8",
+    "G7",
+    "I9",
+    "E9",
+    "H6",
+    "E7",
+    "F7",
+    "G9",
+    "E6",
+    "D6",
+    "C5",
+    "H10"
+   ]
+  }
+ ]
+}
