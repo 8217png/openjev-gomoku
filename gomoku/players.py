@@ -10,10 +10,11 @@ import time
 
 import httpx
 
-from .engine import (BLACK, SIZE, AlphaBetaBot, Board, describe_move, other, parse_coord,
-                     threat_summary, to_coord)
+from .engine import (BLACK, SIZE, AlphaBetaBot, Board, describe_move, line_windows, other, parse_coord,
+                     stone_lists, threat_summary, to_coord)
 
 JEV_URL = os.environ.get("JEV_URL", "http://127.0.0.1:18310")
+STARTLUX_URL = os.environ.get("STARTLUX_URL", "http://127.0.0.1:18330")
 LLM_BASE_URL = os.environ.get("LLM_BASE_URL", "http://127.0.0.1:18300/v1")
 LLM_MODEL = os.environ.get("LLM_MODEL", "qwen3.5-9b")
 LLM_API_KEY = os.environ.get("LLM_API_KEY", "none")
@@ -93,51 +94,163 @@ class AlgoPlayer(Player):
         return {"move": res["move"], "meta": {k: v for k, v in res.items() if k != "move"}}
 
 
+RULES = ("Priorities: 1) a move that WINS immediately; 2) otherwise BLOCK an opponent five; "
+         "3) create an open four or a double threat; 4) block the opponent's open three / four points; "
+         "5) otherwise prefer moves that both build your shapes and hinder the opponent.")
+
+ATTACK_STRONG = ("creates an open four", "creates a four-three", "creates a double open three",
+                 "creates a four ", "creates an open three")
+# Stage-1 goals of the staged mode, in priority order: (id, description, membership test).
+GOALS = (
+    ("win", "WIN immediately: complete five in a row", lambda c: c["attack"].startswith("WINS")),
+    ("block-five", "BLOCK the opponent's five (they win next move otherwise)",
+     lambda c: c["defence"].startswith("BLOCKS")),
+    ("attack", "ATTACK: make a forcing threat of your own (four / open three / double threat)",
+     lambda c: c["attack"].startswith(ATTACK_STRONG)),
+    ("defend", "DEFEND: block a point where the opponent makes a four or open four / open three",
+     lambda c: not c["defence"].startswith(("BLOCKS", "slightly", "no defensive"))),
+    ("develop", "DEVELOP: no urgent threats; build your shapes while hindering the opponent", lambda c: True),
+)
+
+
 class JevPlayer(Player):
     """Algorithm proposes <=16 legal candidate moves with tactical descriptions; OpenJev picks one.
 
     `votes` > 1 asks the model several times with differently shuffled candidate orders and averages
     the probabilities, which cancels the model's preference for particular answer letters.
+
+    `info` selects how much the model is told (ablations for the README):
+      full      board + threat summary + priority rules + attack/defence text per candidate (default)
+      bare      board + candidate coordinates only
+      barerules bare + the priority rules
+      rich      barerules + a raw transcription of the position (no analysis): both sides' stone lists, and for
+                every candidate the four lines through it (4 cells each side) — the gomoku analogue of the chess
+                harness's piece lists
+      staged    progressive disclosure: first pick a goal (win / block / attack / defend / develop) from
+                the threat summary, then pick a move among that goal's candidates, described only by the
+                aspect relevant to the goal.
+
+    `backend` selects the decision model: "openjev" (jev_service, POST /decide) or "startlux"
+    (StartLux-Decision, TypeSafe POST /v1/systemone). Both get exactly the same state, instructions and candidates.
     """
 
     kind = "jev"
+    INFO_LEVELS = ("full", "bare", "barerules", "rich", "staged")
+    BACKENDS = ("openjev", "startlux")
 
     def __init__(self, effort: str = "high", n_candidates: int = 10, shuffle: bool = True,
-                 votes: int = 2, seed: int | None = None, url: str = JEV_URL):
+                 votes: int = 2, seed: int | None = None, url: str | None = None, info: str = "full",
+                 backend: str = "openjev"):
+        if info not in self.INFO_LEVELS:
+            raise ValueError(f"unknown info level {info}")
+        if backend not in self.BACKENDS:
+            raise ValueError(f"unknown backend {backend}")
+        self.backend = backend
         self.effort = effort
+        self.info = info
         self.n = max(2, min(16, n_candidates))
         self.shuffle = shuffle
         self.votes = max(1, votes)
         self.rng = random.Random(seed)
-        self.url = url
+        self.url = url or (STARTLUX_URL if backend == "startlux" else JEV_URL)
 
     def label(self):
-        return f"jev-{self.effort}"
+        base = "slx" if self.backend == "startlux" else f"jev-{self.effort}"
+        return base + ("" if self.info == "full" else f"-{self.info}")
+
+    def _decide(self, req: dict) -> dict:
+        """POST one choice request; returns {"probabilities", "latency_ms", ...} for either backend."""
+        if self.backend == "openjev":
+            resp = http_client(self.url).post(f"{self.url}/decide", json=req)
+            resp.raise_for_status()
+            return resp.json()
+        body = {"state": req["state"], "questions": {"move": {
+            "type": "choice", "instructions": req["instructions"],
+            "criteria": {c["id"]: c["description"] for c in req["criteria"]}}}}  # dict order = letter order
+        resp = http_client(self.url).post(f"{self.url}/v1/systemone", json=body)
+        resp.raise_for_status()
+        data = resp.json()
+        return {"probabilities": data["answers"]["move"]["probabilities"], "latency_ms": data.get("latency_ms", 0),
+                "effort": None, "executed_layers": None, "prompt_tokens": data.get("usage", {}).get("input_tokens")}
 
     def candidates(self, board: Board) -> list:
         player = board.to_move
         ranked = board.ranked_moves(player, self.n)
         return [describe_move(board, r, c, player) | {"rc": (r, c)} for _, r, c in ranked]
 
+    def _request(self, state: str, instructions: str, criteria: list) -> dict:
+        return {"state": state, "instructions": instructions, "criteria": criteria,
+                "primitive": "choice", "effort": self.effort}
+
     def build_request(self, board: Board, cands: list) -> dict:
         player = board.to_move
         me = "X" if player == BLACK else "O"
-        return {
-            "state": board_prompt(board, player) + "\nThreat analysis: " + threat_summary(board, player),
-            "instructions": (
-                f"You are {_stone_name(player)} ({me}). Choose the strongest next move. Priorities: "
-                "1) a move that WINS immediately; 2) otherwise BLOCK an opponent five; "
-                "3) create an open four or a double threat; 4) block the opponent's open three / four points; "
-                "5) otherwise prefer moves that both build your shapes and hinder the opponent."
-            ),
-            "criteria": [
-                {"id": c["coord"], "description": f"Play {me} at {c['coord']}. Attack: {c['attack']}. "
-                 f"Defence: {c['defence']}."}
-                for c in cands
-            ],
-            "primitive": "choice",
-            "effort": self.effort,
-        }
+        you = f"You are {_stone_name(player)} ({me}). Choose the strongest next move."
+        if self.info in ("bare", "barerules"):
+            return self._request(board_prompt(board, player),
+                                 you + (" " + RULES if self.info == "barerules" else ""),
+                                 [{"id": c["coord"], "description": f"Play {me} at {c['coord']}."} for c in cands])
+        if self.info == "rich":
+            return self._request(
+                board_prompt(board, player) + "\n" + stone_lists(board),
+                you + " " + RULES + " Each option lists the four lines through its point "
+                "(X = Black, O = White, . = empty, # = off the board, [*] = the point itself).",
+                [{"id": c["coord"], "description": f"Play {me} at {c['coord']}. "
+                  + "; ".join(line_windows(board, *c["rc"]))} for c in cands])
+        return self._request(
+            board_prompt(board, player) + "\nThreat analysis: " + threat_summary(board, player),
+            you + " " + RULES,
+            [{"id": c["coord"], "description": f"Play {me} at {c['coord']}. Attack: {c['attack']}. "
+              f"Defence: {c['defence']}."} for c in cands])
+
+    def _vote(self, items: list, make_request) -> tuple[dict, dict, float]:
+        """Ask `votes` times with shuffled `items` (each has an "id"); return averaged probs, last response, ms."""
+        probs = {it["id"]: 0.0 for it in items}
+        model_ms, data = 0.0, {}
+        for _ in range(self.votes):
+            order = items[:]
+            if self.shuffle:
+                # Hide the heuristic ordering so the decision comes from the model, not list position.
+                self.rng.shuffle(order)
+            data = self._decide(make_request(order))
+            model_ms += data.get("latency_ms", 0)
+            for k, v in data["probabilities"].items():
+                probs[k] += v / self.votes
+        return probs, data, model_ms
+
+    def _staged(self, board: Board, cands: list) -> tuple[list, dict, dict, float]:
+        """Stage 1: choose a goal. Returns (stage-2 criteria, stage-1 meta, last response, ms)."""
+        player = board.to_move
+        me = "X" if player == BLACK else "O"
+        state = board_prompt(board, player) + "\nThreat analysis: " + threat_summary(board, player)
+        groups = {}
+        for gid, text, test in GOALS:
+            members = [c for c in cands if test(c)]
+            if members:
+                groups[gid] = (text, members)
+        meta, data, ms = {}, {}, 0.0
+        if len(groups) > 1:
+            def strongest(gid, members):
+                key = "defence" if gid in ("block-five", "defend") else "attack"
+                return members[0][key]  # candidates are in heuristic order, first = strongest
+            goals = [{"id": gid, "description": f"{text}. {len(members)} candidate move(s); strongest effect: "
+                      f"{strongest(gid, members)}."} for gid, (text, members) in groups.items()]
+            probs, data, ms = self._vote(goals, lambda order: self._request(
+                state, f"You are {_stone_name(player)} ({me}). Decide the GOAL of your next move. " + RULES, order))
+            goal = max(probs, key=probs.get)
+            meta = {"goal": goal, "goal_probs": {k: round(v, 4) for k, v in probs.items()}}
+        else:
+            goal = next(iter(groups))
+            meta = {"goal": goal, "note": "single goal available"}
+        text, members = groups[goal]
+        def describe(c):
+            if goal in ("win", "attack"):
+                return f"Play {me} at {c['coord']}: {c['attack']}."
+            if goal in ("block-five", "defend"):
+                return f"Play {me} at {c['coord']}: {c['defence']}."
+            return f"Play {me} at {c['coord']}. Attack: {c['attack']}. Defence: {c['defence']}."
+        meta["stage2_instructions"] = f"You are {_stone_name(player)} ({me}). Goal: {text}. Choose the best move for this goal."
+        return [{"id": c["coord"], "description": describe(c)} for c in members], meta, data, ms
 
     def choose(self, board: Board) -> dict:
         if len(board.moves) == 0:
@@ -146,29 +259,34 @@ class JevPlayer(Player):
         if len(cands) == 1:
             return {"move": cands[0]["rc"], "meta": {"note": "single legal candidate"}}
         t0 = time.perf_counter()
-        probs = {c["coord"]: 0.0 for c in cands}
-        model_ms, data = 0.0, {}
-        for _ in range(self.votes):
-            order = cands[:]
-            if self.shuffle:
-                # Hide the heuristic ordering so the decision comes from the model, not list position.
-                self.rng.shuffle(order)
-            resp = http_client(self.url).post(f"{self.url}/decide", json=self.build_request(board, order))
-            resp.raise_for_status()
-            data = resp.json()
-            model_ms += data.get("latency_ms", 0)
-            for k, v in data["probabilities"].items():
-                probs[k] += v / self.votes
+        extra, model_ms = {}, 0.0
+        if self.info == "staged":
+            player = board.to_move
+            criteria, extra, data, model_ms = self._staged(board, cands)
+            state = board_prompt(board, player) + "\nThreat analysis: " + threat_summary(board, player)
+            instr = extra.pop("stage2_instructions")
+            if len(criteria) == 1:
+                probs = {criteria[0]["id"]: 1.0}
+            else:
+                probs, data2, ms2 = self._vote(criteria, lambda order: self._request(state, instr, order))
+                data, model_ms = data2, model_ms + ms2
+        else:
+            items = [{"id": c["coord"], "c": c} for c in cands]
+            probs, data, model_ms = self._vote(
+                items, lambda order: self.build_request(board, [it["c"] for it in order]))
         choice = max(probs, key=probs.get)
         rc = next(c["rc"] for c in cands if c["coord"] == choice)
         top = sorted(probs.items(), key=lambda kv: -kv[1])
         return {
             "move": rc,
             "meta": {
-                "effort": data["effort"],
-                "executed_layers": data["executed_layers"],
-                "prompt_tokens": data["prompt_tokens"],
+                "backend": self.backend,
+                "effort": data.get("effort", self.effort),
+                "executed_layers": data.get("executed_layers"),
+                "prompt_tokens": data.get("prompt_tokens"),
                 "votes": self.votes,
+                "info": self.info,
+                **extra,
                 "model_ms": round(model_ms, 1),
                 "http_ms": round((time.perf_counter() - t0) * 1000, 1),
                 "top": [{"coord": k, "p": round(v, 4)} for k, v in top[:5]],
@@ -257,7 +375,8 @@ def make_player(spec: dict, seed: int | None = None) -> Player | None:
         return AlgoPlayer(spec.get("level", "hard"), seed=seed)
     if kind == "jev":
         return JevPlayer(spec.get("effort", "high"), int(spec.get("candidates", 10)),
-                         bool(spec.get("shuffle", True)), int(spec.get("votes", 2)), seed=seed)
+                         bool(spec.get("shuffle", True)), int(spec.get("votes", 2)), seed=seed,
+                         info=spec.get("info", "full"), backend=spec.get("backend", "openjev"), url=spec.get("url"))
     if kind == "llm":
         return LLMPlayer(spec.get("model") or LLM_MODEL, spec.get("base_url") or LLM_BASE_URL,
                          spec.get("api_key") or LLM_API_KEY, bool(spec.get("thinking", False)), seed=seed)

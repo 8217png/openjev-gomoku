@@ -1,5 +1,6 @@
 # Python
 .venv/
+.venv-startlux/
 __pycache__/
 *.pyc
 .pytest_cache/

@@ -1,0 +1,588 @@
+{
+ "summary": {
+  "a": "slx27-bare",
+  "b": "algo-easy",
+  "games": 20,
+  "score": {
+   "algo-easy": 19,
+   "slx27-bare": 1
+  },
+  "per_player": {
+   "slx27-bare": {
+    "wins": 1,
+    "avg_ms_per_move": 921.0,
+    "moves": 143,
+    "missed_win": 3,
+    "missed_block": 19,
+    "llm_retries": 0,
+    "llm_fallbacks": 0
+   },
+   "algo-easy": {
+    "wins": 19,
+    "avg_ms_per_move": 0.9,
+    "moves": 152,
+    "missed_win": 0,
+    "missed_block": 0,
+    "llm_retries": 0,
+    "llm_fallbacks": 0
+   }
+  }
+ },
+ "games": [
+  {
+   "black": "slx27-bare",
+   "white": "algo-easy",
+   "winner": "algo-easy",
+   "moves": 18,
+   "opening": [
+    "H8",
+    "I7",
+    "H10"
+   ],
+   "record": [
+    "H9",
+    "I8",
+    "G8",
+    "I9",
+    "J8",
+    "I10",
+    "I12",
+    "K10",
+    "J10",
+    "L10",
+    "J9",
+    "G10",
+    "J7",
+    "F10",
+    "J11"
+   ]
+  },
+  {
+   "black": "algo-easy",
+   "white": "slx27-bare",
+   "winner": "algo-easy",
+   "moves": 11,
+   "opening": [
+    "H8",
+    "I7",
+    "H10"
+   ],
+   "record": [
+    "H9",
+    "I9",
+    "J10",
+    "J8",
+    "I8",
+    "G11",
+    "G10",
+    "F12"
+   ]
+  },
+  {
+   "black": "slx27-bare",
+   "white": "algo-easy",
+   "winner": "algo-easy",
+   "moves": 16,
+   "opening": [
+    "H8",
+    "I6",
+    "H7"
+   ],
+   "record": [
+    "H9",
+    "I8",
+    "J9",
+    "J8",
+    "G8",
+    "K8",
+    "L8",
+    "G9",
+    "I10",
+    "K9",
+    "J11",
+    "K10",
+    "K12"
+   ]
+  },
+  {
+   "black": "algo-easy",
+   "white": "slx27-bare",
+   "winner": "algo-easy",
+   "moves": 29,
+   "opening": [
+    "H8",
+    "I6",
+    "H7"
+   ],
+   "record": [
+    "H6",
+    "J6",
+    "J7",
+    "H5",
+    "I7",
+    "I8",
+    "J8",
+    "K9",
+    "J9",
+    "J11",
+    "K8",
+    "L9",
+    "K10",
+    "G5",
+    "F5",
+    "I10",
+    "H9",
+    "L7",
+    "L6",
+    "K7",
+    "M7",
+    "I5",
+    "J5",
+    "H4",
+    "J4",
+    "G3"
+   ]
+  },
+  {
+   "black": "slx27-bare",
+   "white": "algo-easy",
+   "winner": "algo-easy",
+   "moves": 14,
+   "opening": [
+    "H8",
+    "H7",
+    "G6"
+   ],
+   "record": [
+    "G7",
+    "G8",
+    "F8",
+    "H6",
+    "F7",
+    "I7",
+    "F6",
+    "E7",
+    "F5",
+    "G5",
+    "F4"
+   ]
+  },
+  {
+   "black": "algo-easy",
+   "white": "slx27-bare",
+   "winner": "algo-easy",
+   "moves": 15,
+   "opening": [
+    "H8",
+    "H7",
+    "G6"
+   ],
+   "record": [
+    "G7",
+    "F7",
+    "G8",
+    "I6",
+    "H6",
+    "H5",
+    "I5",
+    "J4",
+    "I4",
+    "D9",
+    "J6",
+    "E8"
+   ]
+  },
+  {
+   "black": "slx27-bare",
+   "white": "algo-easy",
+   "winner": "algo-easy",
+   "moves": 24,
+   "opening": [
+    "H8",
+    "G6",
+    "G8"
+   ],
+   "record": [
+    "F8",
+    "I8",
+    "J8",
+    "H9",
+    "H7",
+    "H10",
+    "H12",
+    "G10",
+    "F11",
+    "G11",
+    "G9",
+    "I10",
+    "F7",
+    "J10",
+    "K10",
+    "J11",
+    "K12",
+    "K11",
+    "F10",
+    "H11",
+    "F9"
+   ]
+  },
+  {
+   "black": "algo-easy",
+   "white": "slx27-bare",
+   "winner": "algo-easy",
+   "moves": 17,
+   "opening": [
+    "H8",
+    "G6",
+    "G8"
+   ],
+   "record": [
+    "H6",
+    "I6",
+    "F6",
+    "E6",
+    "F7",
+    "F8",
+    "I8",
+    "E8",
+    "D8",
+    "H7",
+    "E7",
+    "F9",
+    "D7",
+    "E10"
+   ]
+  },
+  {
+   "black": "slx27-bare",
+   "white": "algo-easy",
+   "winner": "algo-easy",
+   "moves": 22,
+   "opening": [
+    "H8",
+    "J10",
+    "J8"
+   ],
+   "record": [
+    "I8",
+    "I10",
+    "H6",
+    "J9",
+    "H11",
+    "I9",
+    "H9",
+    "H10",
+    "K7",
+    "K9",
+    "L9",
+    "L10",
+    "M11",
+    "K11",
+    "J7",
+    "K8",
+    "K6",
+    "K12",
+    "G10"
+   ]
+  },
+  {
+   "black": "algo-easy",
+   "white": "slx27-bare",
+   "winner": "algo-easy",
+   "moves": 17,
+   "opening": [
+    "H8",
+    "J10",
+    "J8"
+   ],
+   "record": [
+    "I8",
+    "H10",
+    "I9",
+    "I10",
+    "H11",
+    "G10",
+    "F10",
+    "G8",
+    "G9",
+    "H9",
+    "F8",
+    "F7",
+    "H7",
+    "J11"
+   ]
+  },
+  {
+   "black": "slx27-bare",
+   "white": "algo-easy",
+   "winner": "algo-easy",
+   "moves": 12,
+   "opening": [
+    "H8",
+    "G6",
+    "F8"
+   ],
+   "record": [
+    "G8",
+    "H7",
+    "H6",
+    "G7",
+    "F6",
+    "F7",
+    "I6",
+    "I7",
+    "J6"
+   ]
+  },
+  {
+   "black": "algo-easy",
+   "white": "slx27-bare",
+   "winner": "algo-easy",
+   "moves": 11,
+   "opening": [
+    "H8",
+    "G6",
+    "F8"
+   ],
+   "record": [
+    "G8",
+    "G7",
+    "H6",
+    "F6",
+    "F7",
+    "I9",
+    "H9",
+    "J10"
+   ]
+  },
+  {
+   "black": "slx27-bare",
+   "white": "algo-easy",
+   "winner": "algo-easy",
+   "moves": 30,
+   "opening": [
+    "H8",
+    "H10",
+    "J7"
+   ],
+   "record": [
+    "J8",
+    "I7",
+    "I9",
+    "K7",
+    "L7",
+    "H7",
+    "G7",
+    "H6",
+    "H5",
+    "J6",
+    "K5",
+    "I6",
+    "K6",
+    "G6",
+    "F6",
+    "G8",
+    "F9",
+    "I8",
+    "J9",
+    "F8",
+    "E8",
+    "H9",
+    "J5",
+    "I5",
+    "I4",
+    "H4",
+    "H3"
+   ]
+  },
+  {
+   "black": "algo-easy",
+   "white": "slx27-bare",
+   "winner": "algo-easy",
+   "moves": 11,
+   "opening": [
+    "H8",
+    "H10",
+    "J7"
+   ],
+   "record": [
+    "J8",
+    "I9",
+    "H9",
+    "G7",
+    "H7",
+    "J10",
+    "I11",
+    "F6"
+   ]
+  },
+  {
+   "black": "slx27-bare",
+   "white": "algo-easy",
+   "winner": "slx27-bare",
+   "moves": 27,
+   "opening": [
+    "H8",
+    "H10",
+    "H7"
+   ],
+   "record": [
+    "H6",
+    "G7",
+    "F6",
+    "F7",
+    "I7",
+    "E7",
+    "D7",
+    "G6",
+    "G5",
+    "E8",
+    "H5",
+    "F5",
+    "E4",
+    "F4",
+    "C10",
+    "E6",
+    "E9",
+    "G8",
+    "D5",
+    "I8",
+    "F8",
+    "J8",
+    "K8",
+    "J9"
+   ]
+  },
+  {
+   "black": "algo-easy",
+   "white": "slx27-bare",
+   "winner": "algo-easy",
+   "moves": 13,
+   "opening": [
+    "H8",
+    "H10",
+    "H7"
+   ],
+   "record": [
+    "H9",
+    "F8",
+    "G8",
+    "F7",
+    "G7",
+    "F9",
+    "F10",
+    "F5",
+    "G5",
+    "F6"
+   ]
+  },
+  {
+   "black": "slx27-bare",
+   "white": "algo-easy",
+   "winner": "algo-easy",
+   "moves": 10,
+   "opening": [
+    "H8",
+    "G6",
+    "I6"
+   ],
+   "record": [
+    "G8",
+    "H6",
+    "G7",
+    "H7",
+    "G9",
+    "H9",
+    "G5"
+   ]
+  },
+  {
+   "black": "algo-easy",
+   "white": "slx27-bare",
+   "winner": "algo-easy",
+   "moves": 17,
+   "opening": [
+    "H8",
+    "G6",
+    "I6"
+   ],
+   "record": [
+    "H6",
+    "G4",
+    "H5",
+    "F7",
+    "H7",
+    "H4",
+    "F4",
+    "F5",
+    "F6",
+    "E6",
+    "G5",
+    "H3",
+    "G8",
+    "D7"
+   ]
+  },
+  {
+   "black": "slx27-bare",
+   "white": "algo-easy",
+   "winner": "algo-easy",
+   "moves": 30,
+   "opening": [
+    "H8",
+    "J7",
+    "F8"
+   ],
+   "record": [
+    "G8",
+    "H7",
+    "H6",
+    "F7",
+    "F9",
+    "G7",
+    "E7",
+    "F6",
+    "I9",
+    "F5",
+    "F4",
+    "G6",
+    "I8",
+    "I7",
+    "D3",
+    "H5",
+    "I4",
+    "G5",
+    "E5",
+    "I5",
+    "J5",
+    "E6",
+    "G3",
+    "G4",
+    "D6",
+    "D7",
+    "C7"
+   ]
+  },
+  {
+   "black": "algo-easy",
+   "white": "slx27-bare",
+   "winner": "algo-easy",
+   "moves": 11,
+   "opening": [
+    "H8",
+    "J7",
+    "F8"
+   ],
+   "record": [
+    "G8",
+    "H9",
+    "G9",
+    "H7",
+    "G7",
+    "H6",
+    "G6",
+    "H10"
+   ]
+  }
+ ]
+}

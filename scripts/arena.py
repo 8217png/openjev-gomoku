@@ -3,12 +3,15 @@
 Examples:
   python scripts/arena.py jev-high algo-medium --games 20
   python scripts/arena.py jev-high llm --games 4
-Player specs: human is not allowed; jev-high | jev-low | llm | llm-think | algo-<easy|medium|hard|expert>
+Player specs: human is not allowed; jev-high | jev-low | jev-high-<bare|barerules|rich|staged> (info ablations)
+             | slx | slx-<bare|barerules|staged> (StartLux-Decision-9B, same requests)
+             | slx27 | slx27-<...> (StartLux-Decision-27B GGUF at $STARTLUX27_URL) | llm | llm-think | algo-<easy|medium|hard|expert>
              | cand-top1 | cand-random (controls: pick from the same candidate list JEV sees).
 """
 
 import argparse
 import json
+import os
 import random
 import sys
 import time
@@ -40,7 +43,14 @@ def build(name, seed):
     if name.startswith("cand-"):
         return CandidateControl(name[5:], seed=seed)
     if name.startswith("jev"):
-        return make_player({"type": "jev", "effort": name.split("-")[1] if "-" in name else "high"}, seed)
+        parts = name.split("-")
+        return make_player({"type": "jev", "effort": parts[1] if len(parts) > 1 else "high",
+                            "info": parts[2] if len(parts) > 2 else "full"}, seed)
+    if name.startswith("slx"):  # StartLux-Decision via /v1/systemone: slx[27] | slx[27]-<info>
+        parts = name.split("-")
+        url = os.environ.get("STARTLUX27_URL", "http://127.0.0.1:18332") if parts[0] == "slx27" else None
+        return make_player({"type": "jev", "backend": "startlux", "url": url,
+                            "info": parts[1] if len(parts) > 1 else "full"}, seed)
     if name.startswith("algo"):
         return make_player({"type": "algo", "level": name.split("-")[1]}, seed)
     if name in ("llm", "llm-think"):

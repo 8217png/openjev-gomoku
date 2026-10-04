@@ -1,0 +1,502 @@
+{
+ "summary": {
+  "a": "slx-barerules",
+  "b": "algo-medium",
+  "games": 20,
+  "score": {
+   "algo-medium": 20
+  },
+  "per_player": {
+   "slx-barerules": {
+    "wins": 0,
+    "avg_ms_per_move": 146.9,
+    "moves": 100,
+    "missed_win": 0,
+    "missed_block": 19,
+    "llm_retries": 0,
+    "llm_fallbacks": 0
+   },
+   "algo-medium": {
+    "wins": 20,
+    "avg_ms_per_move": 7.4,
+    "moves": 110,
+    "missed_win": 0,
+    "missed_block": 0,
+    "llm_retries": 0,
+    "llm_fallbacks": 0
+   }
+  }
+ },
+ "games": [
+  {
+   "black": "slx-barerules",
+   "white": "algo-medium",
+   "winner": "algo-medium",
+   "moves": 14,
+   "opening": [
+    "H8",
+    "I7",
+    "H10"
+   ],
+   "record": [
+    "H7",
+    "I8",
+    "J7",
+    "K7",
+    "J8",
+    "J9",
+    "K9",
+    "G7",
+    "H6",
+    "I9",
+    "G5"
+   ]
+  },
+  {
+   "black": "algo-medium",
+   "white": "slx-barerules",
+   "winner": "algo-medium",
+   "moves": 11,
+   "opening": [
+    "H8",
+    "I7",
+    "H10"
+   ],
+   "record": [
+    "H9",
+    "F8",
+    "G9",
+    "G8",
+    "I8",
+    "E8",
+    "E9",
+    "D8"
+   ]
+  },
+  {
+   "black": "slx-barerules",
+   "white": "algo-medium",
+   "winner": "algo-medium",
+   "moves": 18,
+   "opening": [
+    "H8",
+    "I6",
+    "H7"
+   ],
+   "record": [
+    "H6",
+    "G6",
+    "I8",
+    "H9",
+    "H10",
+    "I10",
+    "G8",
+    "J8",
+    "F8",
+    "G9",
+    "G7",
+    "I7",
+    "E9",
+    "I9",
+    "D10"
+   ]
+  },
+  {
+   "black": "algo-medium",
+   "white": "slx-barerules",
+   "winner": "algo-medium",
+   "moves": 13,
+   "opening": [
+    "H8",
+    "I6",
+    "H7"
+   ],
+   "record": [
+    "H6",
+    "G6",
+    "J6",
+    "L6",
+    "J7",
+    "F5",
+    "J8",
+    "I8",
+    "K8",
+    "E4"
+   ]
+  },
+  {
+   "black": "slx-barerules",
+   "white": "algo-medium",
+   "winner": "algo-medium",
+   "moves": 10,
+   "opening": [
+    "H8",
+    "H7",
+    "G6"
+   ],
+   "record": [
+    "G7",
+    "G8",
+    "F7",
+    "F8",
+    "I7",
+    "I8",
+    "E7"
+   ]
+  },
+  {
+   "black": "algo-medium",
+   "white": "slx-barerules",
+   "winner": "algo-medium",
+   "moves": 11,
+   "opening": [
+    "H8",
+    "H7",
+    "G6"
+   ],
+   "record": [
+    "G7",
+    "I7",
+    "H6",
+    "J6",
+    "J8",
+    "G9",
+    "I9",
+    "F10"
+   ]
+  },
+  {
+   "black": "slx-barerules",
+   "white": "algo-medium",
+   "winner": "algo-medium",
+   "moves": 26,
+   "opening": [
+    "H8",
+    "G6",
+    "G8"
+   ],
+   "record": [
+    "I8",
+    "H7",
+    "I6",
+    "I7",
+    "H6",
+    "J6",
+    "F6",
+    "E6",
+    "K5",
+    "F7",
+    "G7",
+    "F8",
+    "H9",
+    "G9",
+    "F10",
+    "H10",
+    "E7",
+    "E8",
+    "D8",
+    "G10",
+    "G5",
+    "G11",
+    "C9"
+   ]
+  },
+  {
+   "black": "algo-medium",
+   "white": "slx-barerules",
+   "winner": "algo-medium",
+   "moves": 9,
+   "opening": [
+    "H8",
+    "G6",
+    "G8"
+   ],
+   "record": [
+    "H7",
+    "I8",
+    "J7",
+    "J8",
+    "K7",
+    "K8"
+   ]
+  },
+  {
+   "black": "slx-barerules",
+   "white": "algo-medium",
+   "winner": "algo-medium",
+   "moves": 14,
+   "opening": [
+    "H8",
+    "J10",
+    "J8"
+   ],
+   "record": [
+    "I8",
+    "H10",
+    "I9",
+    "H9",
+    "H7",
+    "I10",
+    "J9",
+    "K10",
+    "F5",
+    "H11",
+    "G6"
+   ]
+  },
+  {
+   "black": "algo-medium",
+   "white": "slx-barerules",
+   "winner": "algo-medium",
+   "moves": 13,
+   "opening": [
+    "H8",
+    "J10",
+    "J8"
+   ],
+   "record": [
+    "K8",
+    "H10",
+    "H9",
+    "F8",
+    "G8",
+    "G9",
+    "I9",
+    "I11",
+    "J11",
+    "J12"
+   ]
+  },
+  {
+   "black": "slx-barerules",
+   "white": "algo-medium",
+   "winner": "algo-medium",
+   "moves": 12,
+   "opening": [
+    "H8",
+    "G6",
+    "F8"
+   ],
+   "record": [
+    "I8",
+    "G8",
+    "E8",
+    "H7",
+    "F7",
+    "H6",
+    "H5",
+    "I6",
+    "I4"
+   ]
+  },
+  {
+   "black": "algo-medium",
+   "white": "slx-barerules",
+   "winner": "algo-medium",
+   "moves": 11,
+   "opening": [
+    "H8",
+    "G6",
+    "F8"
+   ],
+   "record": [
+    "H6",
+    "F6",
+    "G7",
+    "F7",
+    "G8",
+    "F5",
+    "G9",
+    "F4"
+   ]
+  },
+  {
+   "black": "slx-barerules",
+   "white": "algo-medium",
+   "winner": "algo-medium",
+   "moves": 12,
+   "opening": [
+    "H8",
+    "H10",
+    "J7"
+   ],
+   "record": [
+    "J10",
+    "I10",
+    "J12",
+    "J11",
+    "I11",
+    "K12",
+    "G9",
+    "H12",
+    "K13"
+   ]
+  },
+  {
+   "black": "algo-medium",
+   "white": "slx-barerules",
+   "winner": "algo-medium",
+   "moves": 11,
+   "opening": [
+    "H8",
+    "H10",
+    "J7"
+   ],
+   "record": [
+    "H9",
+    "J8",
+    "J9",
+    "I8",
+    "I9",
+    "K8",
+    "L8",
+    "G8"
+   ]
+  },
+  {
+   "black": "slx-barerules",
+   "white": "algo-medium",
+   "winner": "algo-medium",
+   "moves": 14,
+   "opening": [
+    "H8",
+    "H10",
+    "H7"
+   ],
+   "record": [
+    "H9",
+    "I8",
+    "F8",
+    "J9",
+    "K10",
+    "J10",
+    "G9",
+    "I9",
+    "I11",
+    "J8",
+    "J12"
+   ]
+  },
+  {
+   "black": "algo-medium",
+   "white": "slx-barerules",
+   "winner": "algo-medium",
+   "moves": 15,
+   "opening": [
+    "H8",
+    "H10",
+    "H7"
+   ],
+   "record": [
+    "H9",
+    "J7",
+    "J8",
+    "I9",
+    "I7",
+    "J10",
+    "G7",
+    "H6",
+    "G8",
+    "H5",
+    "G6",
+    "H4"
+   ]
+  },
+  {
+   "black": "slx-barerules",
+   "white": "algo-medium",
+   "winner": "algo-medium",
+   "moves": 20,
+   "opening": [
+    "H8",
+    "G6",
+    "I6"
+   ],
+   "record": [
+    "G8",
+    "G7",
+    "I9",
+    "H9",
+    "H7",
+    "I8",
+    "J7",
+    "I7",
+    "I4",
+    "J8",
+    "H5",
+    "K8",
+    "L8",
+    "H6",
+    "F7",
+    "J6",
+    "E8"
+   ]
+  },
+  {
+   "black": "algo-medium",
+   "white": "slx-barerules",
+   "winner": "algo-medium",
+   "moves": 15,
+   "opening": [
+    "H8",
+    "G6",
+    "I6"
+   ],
+   "record": [
+    "H6",
+    "I8",
+    "I7",
+    "J8",
+    "G8",
+    "K8",
+    "L8",
+    "J7",
+    "J9",
+    "L9",
+    "H9",
+    "M10"
+   ]
+  },
+  {
+   "black": "slx-barerules",
+   "white": "algo-medium",
+   "winner": "algo-medium",
+   "moves": 10,
+   "opening": [
+    "H8",
+    "J7",
+    "F8"
+   ],
+   "record": [
+    "I8",
+    "H7",
+    "H9",
+    "H6",
+    "K6",
+    "H5",
+    "G10"
+   ]
+  },
+  {
+   "black": "algo-medium",
+   "white": "slx-barerules",
+   "winner": "algo-medium",
+   "moves": 11,
+   "opening": [
+    "H8",
+    "J7",
+    "F8"
+   ],
+   "record": [
+    "H7",
+    "G7",
+    "G8",
+    "F6",
+    "F7",
+    "E5",
+    "H6",
+    "I9"
+   ]
+  }
+ ]
+}

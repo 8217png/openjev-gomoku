@@ -281,6 +281,38 @@ class Board:
         return "\n".join(rows)
 
 
+# ---------------------------------------------------------------- raw line transcription
+LINE_NAMES = {(0, 1): "horizontal", (1, 0): "vertical", (1, 1): "diagonal \\", (1, -1): "diagonal /"}
+
+
+def line_windows(board: "Board", r: int, c: int, reach: int = 4) -> list[str]:
+    """The four lines through (r, c), `reach` cells each side, transcribed without analysis:
+    X = Black, O = White, . = empty, # = off the board, [*] = (r, c) itself."""
+    sym = {EMPTY: ".", BLACK: "X", WHITE: "O"}
+    out = []
+    for dr, dc in DIRS:
+        cells, ends = [], []
+        for k in range(-reach, reach + 1):
+            rr, cc = r + k * dr, c + k * dc
+            inside = 0 <= rr < SIZE and 0 <= cc < SIZE
+            cells.append("[*]" if k == 0 else sym[board.grid[rr][cc]] if inside else "#")
+            if inside:
+                ends.append(to_coord(rr, cc))
+        out.append(f"{LINE_NAMES[(dr, dc)]} {ends[0]}..{ends[-1]}: {' '.join(cells)}")
+    return out
+
+
+def stone_lists(board: "Board") -> str:
+    """Coordinates of every stone of each colour (the gomoku analogue of chess piece lists)."""
+    lists = {BLACK: [], WHITE: []}
+    for r in range(SIZE):
+        for c in range(SIZE):
+            if board.grid[r][c] != EMPTY:
+                lists[board.grid[r][c]].append(to_coord(r, c))
+    return (f"Black (X) stones: {', '.join(lists[BLACK]) or 'none'}.\n"
+            f"White (O) stones: {', '.join(lists[WHITE]) or 'none'}.")
+
+
 # ---------------------------------------------------------------- tactical description
 SHAPE_TEXT = {
     "five": "five in a row",
